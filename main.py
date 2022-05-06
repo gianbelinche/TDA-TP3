@@ -1,5 +1,7 @@
 from math import inf
 from copy import deepcopy
+import negative_cycle as nc
+import augment_path as ap
 import sys
 
 def read_graph_file(path):
@@ -39,17 +41,22 @@ def residual_graph(source, target, neighbors, properties):
 
 	return 'source', 'target', rneighbors, rproperties
 
-
-
 def solve_flights(path):
 	source, target, neighbors, properties = read_graph_file(path)
 	rsource, rtarget, rneighbors, rproperties = residual_graph(source, target, neighbors, properties)
 
-	print(neighbors)
-	print(properties)
+	maximum_flow = ff.ford_fulkerson(rsource, rtarget, rneighbors, rproperties)
 
-	print(rneighbors)
-	print(rproperties)
+	negative_cycle = nc.find_negative_cycle_node(rsource, rneighbors, rproperties)
+	while len(negative_cycle) > 0:
+		ap.augment_path(rneighbors, rproperties, negative_cycle)
+		negative_cycle = nc.find_negative_cycle_node(rsource, rneighbors, rproperties)
+
+	minimum_cost = 0
+	for (origin, goal), value in rproperties.items():
+		minimum_cost += value[1]*rproperties[goal, origin][0]
+
+	return maximum_flow, minimum_cost
 
 def main():
     if len(sys.argv) < 2:
@@ -57,6 +64,8 @@ def main():
         print("Uso: main.py <ruta_archivo>")
         return
 
-    solve_flights(sys.argv[1])
+    maximum_flow, minimum_cost = solve_flights(sys.argv[1])
+    print('Cantidad de personas maximas: ', maximum_flow)
+    print('Costo total mínimo:', maximum_cost)
 
 main()
