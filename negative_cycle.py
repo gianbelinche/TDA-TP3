@@ -1,6 +1,6 @@
 from math import inf
 
-def find_negative_cycle_node(costs, neighbours, edges, predecessor):
+def __find_negative_cycle_node(costs, neighbours, edges, predecessor):
     """
     Recibe un diccionario para almacenar los costos, un diccionario de vecino, 
     un diccionario de aristas con su capacidad y costo y un diccionario para
@@ -52,9 +52,9 @@ def find_negative_cycle(initial, neighbours, edges):
         costs[node] = inf
     costs[initial] = 0
 
-    cycle_target = find_negative_cycle_node(costs, neighbours, edges, predecessor)
+    cycle_target = __find_negative_cycle_node(costs, neighbours, edges, predecessor)
     if not cycle_target:
-        return [], 0
+        return []
 
     # Tomamos un camino de largo n, donde debe encontrarse
     # al menos una instancia del ciclo negativo
