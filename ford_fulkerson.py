@@ -1,6 +1,6 @@
 import math
 
-def Ford_Fulkerson(neighbors,capacitys,source,target):
+def ford_fulkerson(neighbors,capacitys,source,target):
     max_flow = 0
     finished = False
     while not finished:
@@ -44,7 +44,7 @@ capacitys = {("A","B") : (10,0),("A","C") : (5,0), ("B","A") : (0,0), ("C","D"):
 source = "A"
 target = "D"
 
-print(Ford_Fulkerson(neighbors,capacitys,source,target))
+#ford_fulkerson(neighbors,capacitys,source,target)
 
      
 
