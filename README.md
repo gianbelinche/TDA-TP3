@@ -31,5 +31,6 @@ La salida muestra la cantidad máxima de personas y el costo mínimo.
 - bifurcaciones2 -> 24, 3
 - multiple1 -> 24, 4
 - multiple2 -> 85, 10
-- cycle1 -> 
-- cycle2 -> 
+- cycle1 -> 9, 3
+- pesado1 -> 30, 20
+- mult_correctas1 -> 30, 5
