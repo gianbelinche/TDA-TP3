@@ -17,11 +17,17 @@ def find_negative_cycle_node(costs, neighbours, edges, predecessor):
         for node in neighbours:
             if costs[node] < inf:
                 for neighbour in neighbours[node]:
-                    weight = edges[(node, neighbour)][1] # (capacity, cost)
-                    if weight + costs[node] < costs[neighbour]:
+                    # (capacity, cost)
+                    capacity = edges[(node, neighbour)][0]
+
+                    # No quiero analizarlo si la capacidad es cero
+                    if capacity <= 0: continue
+                    
+                    cost = edges[(node, neighbour)][1]
+                    if cost + costs[node] < costs[neighbour]:
                         modified = True
-                        costs[neighbour] = weight + costs[node]
-                        predecessor[neighbour] = [node, weight]
+                        costs[neighbour] = cost + costs[node]
+                        predecessor[neighbour] = [node, cost]
                         if n == len(neighbours) - 1:
                             return neighbour
 
