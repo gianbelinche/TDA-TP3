@@ -25,12 +25,12 @@ La salida muestra la cantidad máxima de personas y el costo mínimo.
 
     nombre -> costo, #personas
 
-- directo1 -> 12, 4
-- directo2 -> 18, 3
 - bifurcaciones1 -> 18, 3
 - bifurcaciones2 -> 24, 3
+- cycle1 -> 9, 3
+- directo1 -> 12, 4
+- directo2 -> 18, 3
 - multiple1 -> 24, 4
 - multiple2 -> 85, 10
-- cycle1 -> 9, 3
-- pesado1 -> 30, 20
 - mult_correctas1 -> 30, 5
+- pesado1 -> 30, 20
