@@ -12,7 +12,7 @@ def read_graph_file(path):
 	with open(path) as file:
 		source = file.readline().strip()
 		target = file.readline().strip()
-		C = 100
+		C = 0
 		for line in file:
 			node1, node2, cost, capacity = line.strip().split(',')
 			properties[(node1, node2)] = (int(capacity), int(cost), True)
