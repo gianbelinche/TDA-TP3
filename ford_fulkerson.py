@@ -12,8 +12,8 @@ def ford_fulkerson(neighbors,capacitys,source,target):
         if reached_target:
             max_flow += bottleneck
             for first,second in path:
-                capacitys[(first,second)] = (capacitys[(first,second)][0] - bottleneck,capacitys[(first,second)][1]) 
-                capacitys[(second,first)] = (capacitys[(second,first)][0] + bottleneck,capacitys[(second,first)][1])
+                capacitys[(first,second)] = (capacitys[(first,second)][0] - bottleneck,capacitys[(first,second)][1], True) 
+                capacitys[(second,first)] = (capacitys[(second,first)][0] + bottleneck,capacitys[(second,first)][1], True)
         else:
             break
     return max_flow
@@ -43,8 +43,6 @@ neighbors = {"A" : ["B","C"], "B" : ["A"],"C":["D","A"], "D" : ["C"]}
 capacitys = {("A","B") : (10,0),("A","C") : (5,0), ("B","A") : (0,0), ("C","D"): (1,0), ("C","A") : (0,0), ("D","C"): (0,0)}
 source = "A"
 target = "D"
-
-#ford_fulkerson(neighbors,capacitys,source,target)
 
      
 

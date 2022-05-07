@@ -12,10 +12,10 @@ def read_graph_file(path):
 	with open(path) as file:
 		source = file.readline().strip()
 		target = file.readline().strip()
-		C = 0
+		C = 100
 		for line in file:
 			node1, node2, cost, capacity = line.strip().split(',')
-			properties[(node1, node2)] = (int(capacity), int(cost))
+			properties[(node1, node2)] = (int(capacity), int(cost), True)
 			if node1 == source:
 				C += int(capacity)
 			if node1 in neighbors:
@@ -30,10 +30,10 @@ def residual_graph(source, target, neighbors, properties, C):
 	rproperties = deepcopy(properties)
 
 	rneighbors['source'] = [source]
-	rproperties[('source', source)] = (C, 0)
+	rproperties[('source', source)] = (C, 0, True)
 
 	rneighbors[target] = ['target']
-	rproperties[(target, 'target')] = (C, 0)
+	rproperties[(target, 'target')] = (C, 0, True)
 
 	for node, nlist in neighbors.items():
 		for neighbor in nlist:
@@ -41,15 +41,15 @@ def residual_graph(source, target, neighbors, properties, C):
 				rneighbors[neighbor].append(node)
 			else:
 				rneighbors[neighbor] = [node]
-			rproperties[(neighbor, node)] = (0, -rproperties[(node, neighbor)][1])
+			rproperties[(neighbor, node)] = (0, -rproperties[(node, neighbor)][1], True)
 	
 	rneighbors["target"] = [target]
-	rproperties[("target",target)] = (0,0)
+	rproperties[("target",target)] = (0,0, True)
 	if source in rneighbors:
 		rneighbors[source].append("source")
 	else:
 		rneighbors[source] = ["source"]
-	rproperties[(source,"source")] = (0,0)
+	rproperties[(source,"source")] = (0,0, True)
 
 	return 'source', 'target', rneighbors, rproperties
 
@@ -66,7 +66,7 @@ def solve_flights(path):
 
 
 	minimum_cost = 0
-	for (origin, goal), (capacity, cost) in rproperties.items():
+	for (origin, goal), (capacity, cost, enabled) in rproperties.items():
 		if cost > 0:
 			minimum_cost += cost*rproperties[goal, origin][0]
 

@@ -18,10 +18,10 @@ def __find_negative_cycle_node(costs, neighbours, edges, predecessor):
             if costs[node] < inf:
                 for neighbour in neighbours[node]:
                     # (capacity, cost)
-                    capacity = edges[(node, neighbour)][0]
+                    enabled = edges[(node, neighbour)][2]
 
                     # No quiero analizarlo si la capacidad es cero
-                    if capacity <= 0: continue
+                    if not enabled: continue
                     
                     cost = edges[(node, neighbour)][1]
                     if cost + costs[node] < costs[neighbour]:
