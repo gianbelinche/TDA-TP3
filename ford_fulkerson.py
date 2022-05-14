@@ -1,43 +1,42 @@
-import math
+from math import inf
 
-def ford_fulkerson(neighbors,capacitys,source,target):
+def ford_fulkerson(neighbors,properties,source,target):
     max_flow = 0
-    reached_target = True
-    while reached_target:
-        bottleneck = math.inf
-        path = []
-        visited = set()
-        actual = source
-        reached_target,bottleneck = dfs(neighbors,capacitys,actual,target,visited,path,False,bottleneck)
-        if reached_target:
-            max_flow += bottleneck
-            for first,second in path:
-                capacitys[(first,second)] = (capacitys[(first,second)][0] - bottleneck,capacitys[(first,second)][1], True) 
-                capacitys[(second,first)] = (capacitys[(second,first)][0] + bottleneck,capacitys[(second,first)][1], True)
+    path, bottleneck = bfs(neighbors,properties,actual,target)
+
+    while len(path) != 0:
+        max_flow += bottleneck
+        for first,second in path:
+            properties[(first,second)] = (properties[(first,second)][0] - bottleneck,properties[(first,second)][1], True) 
+            properties[(second,first)] = (properties[(second,first)][0] + bottleneck,properties[(second,first)][1], True)
+        path, bottleneck = bfs(neighbors,properties,actual,target)    
     return max_flow
 
+def _build_path(predecessor, properties, target):
+    path = []
+    actual = predecessor[target]
+    bottleneck = inf 
+    while actual != predecessor[actual]:
+        path.append(actual)
+        bottleneck = min(bottleneck, properties[predecessor[actual], actual][0])
+        actual = predecessor[target]
+    return path[::-1], bottleneck
 
-def dfs(neighbors,capacitys,actual,target,visited,path,reached_target,bottleneck):
-    visited.add(actual)
-    if actual == target:
-        return True,bottleneck
+def bfs(neighbors,properties,actual,target):
+    pending = []
+    predecessor = {}
+    predecessor[actual] = actual
     for ng in neighbors[actual]:
-        if ng not in visited and capacitys[(actual,ng)][0] > 0:
-            bottleneck2 = bottleneck
-            if capacitys[(actual,ng)][0] < bottleneck:
-                bottleneck = capacitys[(actual,ng)][0]
-            ret = dfs(neighbors,capacitys,ng,target,visited,path,reached_target,bottleneck)
-            reached_target = ret[0]
-            if ret[0]:
-                path.append((actual,ng))
-                bottleneck = ret[1]
-                break
-            else:
-                bottleneck = bottleneck2
-    return reached_target,bottleneck
+        pending.append(ng)
+        predecessor[ng] = actual
 
-     
+    while(len(pending) != 0):
+        actual = pending.pop(0)
+        for ng in neighbors[actual]:
+            if ng not in predecessor[ng]:
+                pending.append(ng)
+                predecessor[ng] = actual
+                if ng = target:
+                    return _build_path(predecessor, properties, target)
 
-        
-
-
+    return [], 0
