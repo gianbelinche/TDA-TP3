@@ -3,7 +3,7 @@ from copy import deepcopy
 import negative_cycle as nc
 import augment_path as ap
 import sys
-import ford_fulkerson as ff
+import edmonds_karp as ek
 
 def read_graph_file(path):
 	neighbors = dict()
@@ -25,9 +25,8 @@ def read_graph_file(path):
 	
 	return source, target, neighbors, properties, C
 
-def residual_graph(source, target, neighbors, properties, C):
-	rneighbors  = deepcopy(neighbors)
-	rproperties = deepcopy(properties)
+def residual_graph(source, target, rneighbors, rproperties, C):
+	neighbors  = deepcopy(rneighbors)
 
 	rneighbors['source'] = [source]
 	rproperties[('source', source)] = (C, 0, True)
@@ -51,13 +50,13 @@ def residual_graph(source, target, neighbors, properties, C):
 		rneighbors[source] = ["source"]
 	rproperties[(source,"source")] = (0,0, True)
 
-	return 'source', 'target', rneighbors, rproperties
+	return 'source', 'target'
 
 def solve_flights(path):
-	source, target, neighbors, properties, C = read_graph_file(path)
-	rsource, rtarget, rneighbors, rproperties = residual_graph(source, target, neighbors, properties, C)
+	source, target, rneighbors, rproperties, C = read_graph_file(path)
+	rsource, rtarget = residual_graph(source, target, rneighbors, rproperties, C)
 
-	maximum_flow = ff.ford_fulkerson(rneighbors, rproperties,rsource, rtarget)
+	maximum_flow = ek.edmonds_karp(rneighbors, rproperties,rsource, rtarget)
 	
 	negative_cycle = nc.find_negative_cycle(rsource, rneighbors, rproperties)
 	while len(negative_cycle) > 0:
