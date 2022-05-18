@@ -1,6 +1,11 @@
 from math import inf
 
 def augment_path(rproperties, negative_cycle):
+	"""
+	Recibe un diccionario de propiedades de aristas y una lista de nodos de un ciclo negativo
+	Redirige el flujo actual por las aristas del ciclo negativo para reducir el costo, manteniendo el flujo.
+	Elimina o agrega lógicamente aristas para romper ciclos negativos (dado que se permite capacidad 0).
+	"""
 	bottleneck = inf
 	for i in range(len(negative_cycle)):
 		origin = negative_cycle[i]

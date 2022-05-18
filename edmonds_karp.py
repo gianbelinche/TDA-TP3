@@ -1,6 +1,11 @@
 from math import inf
 
 def edmonds_karp(neighbors,properties,source,target):
+    """
+    Recibe un diccionario de adyacencia, un diccionario de propiedades de las aristas,
+    el nodo fuente y el sumidero.
+    Ejecuta el algoritmo de Edmonds-Karp sobre el grafo y retorna su flujo máximo.
+    """
     max_flow = 0
     path, bottleneck = bfs(neighbors,properties,source,target)
     while len(path) != 0:
@@ -14,6 +19,10 @@ def edmonds_karp(neighbors,properties,source,target):
     return max_flow
 
 def _build_path(predecessor, properties, target):
+    """
+    Función auxiliar de bfs. Recibe un diccionario de predecesores, un diccionario de propiedades de las aristas
+    y el nodo objetivo. Retorna el camino en el orden correcto desde el origen hasta el objetivo y el bottleneck.
+    """
     path = []
     actual = predecessor[target]
     bottleneck = inf 
@@ -24,6 +33,11 @@ def _build_path(predecessor, properties, target):
     return path[::-1], bottleneck
 
 def bfs(neighbors,properties,actual,target):
+    """
+    Recibe un diccionario de propiedades de aristas, un diccionario de propiedades de las aristas,
+    el nodo fuente y el sumidero. Realiza bfs para encontrar el camino mínimo entre fuente y target,
+    retorna una lista con los nodos del camino ordenados y el bottleneck.
+    """
     pending = []
     predecessor = {}
     predecessor[actual] = actual

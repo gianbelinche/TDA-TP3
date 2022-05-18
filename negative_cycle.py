@@ -2,7 +2,7 @@ from math import inf
 
 def __find_negative_cycle_node(costs, neighbours, edges, predecessor):
     """
-    Recibe un diccionario para almacenar los costos, un diccionario de vecino, 
+    Recibe un diccionario para almacenar los costos, un diccionario de vecinos, 
     un diccionario de aristas con su capacidad y costo y un diccionario para
     almacenar los predecesores.
 
@@ -20,7 +20,7 @@ def __find_negative_cycle_node(costs, neighbours, edges, predecessor):
                     # (capacity, cost)
                     enabled = edges[(node, neighbour)][2]
 
-                    # No quiero analizarlo si la capacidad es cero
+                    # No se visitan las aristas desactivadas
                     if not enabled: continue
                     
                     cost = edges[(node, neighbour)][1]
@@ -42,8 +42,8 @@ def find_negative_cycle(initial, neighbours, edges):
     aristas con su capacidad y costo.
     
     En caso de existir ciclo negativo, devuelve una lista con los nodos
-    pertenecientes a dicho ciclo y el costo del ciclo. En caso contrario,
-    devuelve una lista vacía y un costo de 0.
+    pertenecientes a dicho ciclo. En caso contrario,
+    devuelve una lista vacía.
     """
     costs = dict()
     predecessor = dict()
