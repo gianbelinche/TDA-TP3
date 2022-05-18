@@ -1,5 +1,9 @@
 # TDA-TP3
 
+## Dependencias
+
+- Python 3.x
+
 ## Uso
 
 ```sh
@@ -8,7 +12,10 @@ python3 main.py <path.txt>
 
 ## Test
 
+Se pueden ejecutar una serie de pruebas con:
+
 ```sh
+chmod +x test.sh
 ./test.sh
 ```
 
