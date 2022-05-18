@@ -1,5 +1,17 @@
 # TDA-TP3
 
+## Uso
+
+```sh
+python3 main.py <path.txt>
+```
+
+## Test
+
+```sh
+./test.sh
+```
+
 ## Formato Archivos
 
 Las primeras dos líneas corresponden al nodo fuente y sumidero respectivamente.
